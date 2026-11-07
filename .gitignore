@@ -1,0 +1,38 @@
+# Python environment and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Downloaded collections and generated indexes (Release assets only)
+/data/
+/index/
+*.sqlite
+*.sqlite-*
+*.db
+*.bz2
+*.jsonl
+
+# Only publish the final small reports from output/
+/output/*
+!/output/rare_terms/
+!/output/test_results/
+!/output/dataset_identity.json
+
+# Archives, extracted submission copies, local files and temporary files
+*.zip
+/S20240010050-*/
+.DS_Store
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
+.env
+.env.*
+.aws/
+.codex/
+.agents/

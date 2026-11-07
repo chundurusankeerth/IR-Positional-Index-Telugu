@@ -1,0 +1,157 @@
+Telugu Wikipedia positional index: executed results
+Roll number: S20240010050
+
+Build measurements:
+{
+  "documents": 130236,
+  "tokens": 58044470,
+  "vocabulary_size": 2909293,
+  "posting_rows": 34465765,
+  "articles_sha256": "06134a0d7f6501138acc39877178ecc77e4655d22d7ad95a48bd919835c10f2b",
+  "positions_base": 0,
+  "validation": "PASS",
+  "integrity_check": "ok",
+  "elapsed_seconds": 573.345
+}
+
+Verification: retokenized every JSONL document; checked complete positions for all selected terms,
+independent DF/CF totals, exact phrase occurrences, and the indexed source SHA-256.
+Common-term display is limited to three documents; verification covers all its documents.
+Positions are zero-based in cleaned article body tokens.
+
+Test 1: Common Telugu term
+Query: మూలాలు
+Expected: Every posting position and DF/CF match the complete source token streams.
+Actual: {
+  "term": "మూలాలు",
+  "df": 116457,
+  "cf": 119237,
+  "first_three_source_verified_postings": [
+    {
+      "doc_id": 786,
+      "title": "గుంటూరు జిల్లా",
+      "tf": 1,
+      "positions": [
+        1046
+      ]
+    },
+    {
+      "doc_id": 787,
+      "title": "ఆంధ్రప్రదేశ్",
+      "tf": 2,
+      "positions": [
+        457,
+        5088
+      ]
+    },
+    {
+      "doc_id": 788,
+      "title": "భూగోళ శాస్త్రం",
+      "tf": 1,
+      "positions": [
+        1682
+      ]
+    }
+  ]
+}
+Result: PASS
+
+Test 2: Rare Telugu term
+Query: షడ్వర్గం
+Expected: Low-DF real Telugu term; all postings equal source occurrences.
+Actual: {
+  "term": "షడ్వర్గం",
+  "df": 1,
+  "cf": 3,
+  "postings": [
+    {
+      "doc_id": 10426,
+      "tf": 3,
+      "positions": [
+        2,
+        9,
+        262
+      ]
+    }
+  ]
+}
+Result: PASS
+
+Test 3: Nonexistent term
+Query: అసలులేనిపరీక్షాపదం
+Expected: DF=0, CF=0, no postings and no source occurrences.
+Actual: {
+  "term": "అసలులేనిపరీక్షాపదం",
+  "df": 0,
+  "cf": 0,
+  "postings": []
+}
+Result: PASS
+
+Test 4: Repeated occurrences
+Query: మూలాలు
+Expected: One document has TF > 1; complete positions exactly equal independently retokenized source.
+Actual: {
+  "doc_id": 213877,
+  "title": "భారతీయ రైల్వే స్టేషన్ల జాబితా",
+  "tf": 31,
+  "positions": [
+    553,
+    2342,
+    2929,
+    3434,
+    4328,
+    4721,
+    5043,
+    5403,
+    12212,
+    13290,
+    15161,
+    15540,
+    16867,
+    19118,
+    19382,
+    19968,
+    20811,
+    23088,
+    26099,
+    28846,
+    33159,
+    39543,
+    44725,
+    44967,
+    47672,
+    49137,
+    51277,
+    52155,
+    52700,
+    57201,
+    58918
+  ]
+}
+Result: PASS
+
+Test 5: Two-term exact phrase
+Query: షడ్వర్గం అంటారు
+Expected: Disk cursor adjacency results equal all adjacent occurrences found in source tokens.
+Actual: {
+  "tokens": [
+    "షడ్వర్గం",
+    "అంటారు"
+  ],
+  "matching_documents": 1,
+  "postings": [
+    {
+      "doc_id": 10426,
+      "positions": [
+        2,
+        9
+      ],
+      "tf": 2
+    }
+  ]
+}
+Result: PASS
+
+Source validation errors: []
+Tests passed: 5/5

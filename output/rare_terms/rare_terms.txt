@@ -1,0 +1,18 @@
+Telugu Wikipedia positional index: rare terms
+Roll number: S20240010050
+Positions are zero-based in cleaned article body tokens.
+
+Ten distinct rare Telugu terms (prefer title terms with DF=1 and CF>=2, in dump order):
+Example 1: {"term": "షడ్వర్గం", "df": 1, "cf": 3, "postings": [{"doc_id": 10426, "tf": 3, "positions": [2, 9, 262]}]}
+Example 2: {"term": "షోడశదానాలు", "df": 1, "cf": 2, "postings": [{"doc_id": 10650, "tf": 2, "positions": [0, 45]}]}
+Example 3: {"term": "త్రిలింగాలు", "df": 1, "cf": 2, "postings": [{"doc_id": 11603, "tf": 2, "positions": [35, 138]}]}
+Example 4: {"term": "విత్తాపూర్", "df": 1, "cf": 2, "postings": [{"doc_id": 14276, "tf": 2, "positions": [0, 90]}]}
+Example 5: {"term": "కోనంపల్లె", "df": 1, "cf": 3, "postings": [{"doc_id": 15075, "tf": 3, "positions": [0, 10, 18]}]}
+Example 6: {"term": "జయాపురం", "df": 1, "cf": 3, "postings": [{"doc_id": 15710, "tf": 3, "positions": [0, 10, 18]}]}
+Example 7: {"term": "కానంపల్లె", "df": 1, "cf": 3, "postings": [{"doc_id": 15750, "tf": 3, "positions": [0, 10, 18]}]}
+Example 8: {"term": "ఎనుమలపల్లి", "df": 1, "cf": 4, "postings": [{"doc_id": 16010, "tf": 4, "positions": [0, 25, 33, 101]}]}
+Example 9: {"term": "మర్తన్", "df": 1, "cf": 5, "postings": [{"doc_id": 17998, "tf": 5, "positions": [0, 276, 541, 595, 610]}]}
+Example 10: {"term": "భీంరాజ్", "df": 1, "cf": 4, "postings": [{"doc_id": 18066, "tf": 4, "positions": [0, 588, 628, 641]}]}
+
+Source validation errors: []
+Rare examples: 10
