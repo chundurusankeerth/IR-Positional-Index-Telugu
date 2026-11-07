@@ -180,10 +180,10 @@ The test command creates these two separate report folders. Use --output-dir to
 choose a different parent folder.
 
 The cleaned collection is 1,158,156,593 bytes and the index is 1,655,816,192 bytes.
-The original compressed dump is unchanged. The dataset and index have not been
-uploaded elsewhere. They are excluded from the submission, along with .venv,
-caches, logs and temporary files. Use the download link and commands above to
-regenerate them.
+The original compressed dump is unchanged. The dataset and index are available
+as GitHub Release assets using the links below. They are excluded from Git history
+and the submission ZIP, along with .venv, caches, logs and temporary files.
+The extraction and indexing commands above can also regenerate them.
 
 S20240010050-src.zip contains the source files and requirements.txt.
 S20240010050-A1-PostIndex-IR-M2026.zip contains exactly:
@@ -193,3 +193,26 @@ S20240010050-A1-PostIndex-IR-M2026.zip contains exactly:
 
 For this submission, the two reports are combined in output.txt. The source code
 is unchanged; its packaging helper produces the earlier separate-report layout.
+
+GitHub repository and downloads
+
+Repository:
+https://github.com/chundurusankeerth/IR-Positional-Index-Telugu
+
+Release:
+https://github.com/chundurusankeerth/IR-Positional-Index-Telugu/releases/tag/assignment-data-v1
+
+Original compressed dataset (276043990 bytes):
+https://github.com/chundurusankeerth/IR-Positional-Index-Telugu/releases/download/assignment-data-v1/tewiki-latest-pages-articles-multistream.xml.bz2
+
+Generated positional index (1655816192 bytes):
+https://github.com/chundurusankeerth/IR-Positional-Index-Telugu/releases/download/assignment-data-v1/positional.sqlite
+
+Index SHA-256:
+1a9f3da5f4afcae063bfcd0c3eab89d437bb92f1e3ad5513bbab981761afa549
+
+Place the dataset in data/ and positional.sqlite in index/. After installing the
+dependencies, the downloaded index can be searched directly using the search
+commands above, without rebuilding it. Regenerate data/articles.jsonl from the
+dump if you want to run the source-text validation tests. Both uploaded files
+were checked against their local sizes and SHA-256 checksums.
