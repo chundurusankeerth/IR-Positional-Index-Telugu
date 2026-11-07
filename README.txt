@@ -50,43 +50,92 @@ src/requirements.txt     Lists the required Python packages and their versions.
 
 How to run
 
-The project was run using Python 3.9.6 on macOS. Extract the source ZIP and run
-these commands from the folder containing src/:
+The project was run using Python 3.9.6 on macOS. Run commands from the
+IRASSIGNMENT folder (the folder containing src/). Each block below is a separate
+option. Run the lines in your chosen block in order, in the same terminal.
+
+1. First-time setup only
+
+If .venv already exists, skip the first command and reuse it.
 
   python3 -m venv .venv
   .venv/bin/python -m pip install -r src/requirements.txt
   mkdir -p data index output
 
-If .venv already exists, reuse it. Place the compressed Wikipedia dump in data/.
-There is no need to decompress the file manually.
+Place tewiki-latest-pages-articles-multistream.xml.bz2 in data/, or download it
+from the links below. Do not decompress it manually. Using .venv/bin/python
+works whether or not the virtual environment is activated.
 
-For a small run with 100 articles:
+2. Use the completed index in this project
 
-  .venv/bin/python src/main.py extract --limit 100 --output data/smoke_articles.jsonl
-  .venv/bin/python src/main.py build --articles data/smoke_articles.jsonl --db index/smoke.sqlite
-  .venv/bin/python src/main.py test --articles data/smoke_articles.jsonl --db index/smoke.sqlite --output-dir output/smoke
+The full collection and index have already been generated. You do not need to
+extract or build again to run these searches:
 
-For the full collection:
+  .venv/bin/python src/main.py search "మూలాలు" --limit 3
+  .venv/bin/python src/main.py search "షడ్వర్గం" --limit 0
+  .venv/bin/python src/main.py search "షడ్వర్గం అంటారు" --phrase
+  .venv/bin/python src/main.py search "అసలులేనిపరీక్షాపదం"
+
+To rerun all five tests and ten rare-term examples against the completed collection:
+
+  .venv/bin/python src/main.py test --articles data/articles.jsonl --db index/positional.sqlite --output-dir output
+
+This updates output/test_results/test_results.txt and output/rare_terms/rare_terms.txt.
+It does not rebuild the index or change the source articles. It does not update
+the combined submission snapshot output.txt automatically.
+
+3. Repeatable small run with 100 articles
+
+This block creates a new folder each time, so existing smoke files are preserved.
+Run all lines in the same terminal; ir_smoke_dir stores the new folder's path.
+
+  mkdir -p output
+  ir_smoke_dir=$(mktemp -d output/smoke-run.XXXXXX)
+  .venv/bin/python src/main.py extract --limit 100 --output "$ir_smoke_dir/articles.jsonl"
+  .venv/bin/python src/main.py build --articles "$ir_smoke_dir/articles.jsonl" --db "$ir_smoke_dir/positional.sqlite"
+  .venv/bin/python src/main.py test --articles "$ir_smoke_dir/articles.jsonl" --db "$ir_smoke_dir/positional.sqlite" --output-dir "$ir_smoke_dir/reports"
+  .venv/bin/python src/main.py search "మూలాలు" --db "$ir_smoke_dir/positional.sqlite" --limit 3
+
+The new folder contains articles.jsonl, positional.sqlite, their statistics files,
+and reports/test_results/test_results.txt and reports/rare_terms/rare_terms.txt.
+The small index has its own counts; it is separate from the full submission index.
+
+4. Full build on a fresh copy of the project
+
+Use this block only if data/articles.jsonl and index/positional.sqlite do not
+already exist. This processes the entire dump and can take several minutes.
 
   .venv/bin/python src/main.py extract
   .venv/bin/python src/main.py build
   .venv/bin/python src/main.py test
 
-The default extraction limit is 0, which means all valid articles. Use --limit N
-to select a smaller number. Extraction and indexing do not overwrite existing
-files. For another run, choose new paths with --output, --articles and --db.
-If a run is interrupted, rerun it with a fresh output path instead of using its
-partial files. Test reports are replaced when the test command is run again.
+To repeat the full build while keeping an existing collection and index, use this
+block instead. It requires extra disk space and creates a separate run folder.
 
-Search examples:
+  mkdir -p output
+  ir_full_dir=$(mktemp -d output/full-run.XXXXXX)
+  .venv/bin/python src/main.py extract --limit 0 --output "$ir_full_dir/articles.jsonl"
+  .venv/bin/python src/main.py build --articles "$ir_full_dir/articles.jsonl" --db "$ir_full_dir/positional.sqlite"
+  .venv/bin/python src/main.py test --articles "$ir_full_dir/articles.jsonl" --db "$ir_full_dir/positional.sqlite" --output-dir "$ir_full_dir/reports"
 
-  .venv/bin/python src/main.py search "మూలాలు" --limit 3
-  .venv/bin/python src/main.py search "షడ్వర్గం" --limit 0
-  .venv/bin/python src/main.py search "షడ్వర్గం అంటారు" --phrase
+The default extraction limit is 0 (all valid articles). Use --limit N for a smaller
+collection. The original dump is read without being modified.
+
+If a command says "FileExistsError: Refusing to overwrite", its destination file
+already exists. This protects previous work. Use the existing index, or start a
+new run using the repeatable blocks above. After an interrupted run, use a new
+folder rather than treating the partial files as complete.
 
 Search displays DF, CF, document IDs, term frequencies and positions. It shows
 up to 20 postings by default; --limit 0 displays all of them. A missing word gives
-DF=0, CF=0 and a "No matches" message. Use --help to see each command's options.
+DF=0, CF=0 and a "No matches" message. Use --phrase for multiword phrases.
+
+Command help:
+
+  .venv/bin/python src/main.py extract --help
+  .venv/bin/python src/main.py build --help
+  .venv/bin/python src/main.py search --help
+  .venv/bin/python src/main.py test --help
 
 Text extraction and tokenization
 
